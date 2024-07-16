@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "genproto/auth_service";
+option go_package = "genproto/content-service";
 
 package protos;
 
@@ -10,15 +10,162 @@ service Content {
   rpc DeleteStory(StoryId) returns (Success);
   rpc GetStories(FilterStories) returns (Stories);
   rpc GetFullStoryInfo(StoryId) returns (FullStory);
-  rpc AddComment(Comment) returns (CommentInfo);
-  rpc GetComments(FilterComment) returns (Comments);
+  rpc AddCommentStory(StoryComment) returns (StoryCommentInfo);
+  rpc GetComments(FilterComment) returns (StoryComments);
   rpc AddLike(StoryId) returns (LikeInfo);
   rpc CreateItineraries(Itineraries) returns (InfoItineraries);
   rpc UpdateItineraries(PutItineraries) returns (InfoItineraries);
   rpc DeleteItineraries(ItinerariesId) returns (Success);
   rpc GetItineraries (FilterItineraries) returns (AllItineraries);
+  rpc AddCommentItineraries(ItinerariesComment) returns (ItinerariesCommentInfo);
+  rpc GetDescriptions(FilterDestinations) returns (Destinations);
+  rpc GetDestinationById(DestinationId) returns (FullDestinations);
+  rpc CreateMessage(MessageReq) returns (messageRes);
+  rpc GetMessages(GetMessage) returns (Messages);
+  rpc CreateTravelTips(TravelTipReq) returns (TravelTipRes);
+  rpc GetTravelTips(FilterTravelTip) returns (TravelTips);
+  rpc GetUserStatistics(UserId) returns (UserStatistics);
+  rpc GetTrendingDestinations(Void) returns (Destination);
+}
 
+message Void {}
 
+message Destination {
+  string id = 1;
+  string name = 2;
+  string country = 3;
+  int32 popularity_score = 4;
+  string trending_reason = 5;
+}
+
+message PopularStory {
+  string id = 1;
+  string title = 2;
+  int32 likes_count = 3;
+}
+
+message PopularItinerary {
+  string id = 1;
+  string title = 2;
+  int32 likes_count = 3;
+}
+
+message UserStatistics {
+  string user_id = 1;
+  int32 total_stories = 2;
+  int32 total_itineraries = 3;
+  int32 total_countries_visited = 4;
+  int32 total_likes_received = 5;
+  int32 total_comments_received = 6;
+  PopularStory most_popular_story = 7;
+  PopularItinerary most_popular_itinerary = 8;
+}
+
+message UserId {
+  string userId = 1;
+}
+
+message TravelTips {
+  repeated TravelTipRes travelTips = 1;
+}
+
+message FilterTravelTip {
+  string category = 1;
+  int64 limit = 2;
+  int64 offset = 3;
+}
+
+message TravelTipReq {
+  string title = 1;
+  string content = 2;
+  string category = 3;
+}
+
+message TravelTipRes {
+  string id = 1;
+  string title = 2;
+  string content = 3;
+  string category = 4;
+  string authorId = 5;
+  string createdAt = 6;
+}
+
+message GetMessage {
+  string user_id = 1;
+  int64 limit = 2;
+  int64 offset = 3;
+}
+
+message Messages {
+  repeated Message messages = 1;
+}
+
+message Message {
+  string id = 1;
+  string user_id = 2;
+  Author sender = 3;
+  Author recipient = 4;
+  string content = 5;
+  string createdAt = 6;
+
+}
+
+message messageRes{
+  string id = 1;
+  string senderId = 2;
+  string recipient_id = 3;
+  string content = 4;
+  string created_at = 5;
+}
+
+message MessageReq {
+  string recipient_id = 1;
+  string content = 2;
+}
+
+message DestinationId {
+  string id = 1;
+}
+
+message FullDestinations {
+  string id = 1;
+  string name = 2;
+  string country = 3;
+  string description = 4;
+  repeated string popularActivities = 5;
+  string bestTimeToVisite = 6;
+  int64 avarageCostPerDay = 7;
+  string currency = 8;
+  string language = 9;
+  repeated string topAtractions = 10;
+}
+
+message Destinations {
+  string id = 1;
+  string name = 2;
+  string country = 3;
+  string description = 4;
+  repeated string popularActivities = 5;
+}
+
+message FilterDestinations {
+  string name = 1;
+  string country = 2;
+  int64 limit = 3;
+  int64 offset = 4;
+}
+
+message ItinerariesCommentInfo{
+  string id = 1;
+  string content = 2;
+  string author_id = 3;
+  string itineraryId = 4;
+  string createdAt = 5;
+}
+
+message ItinerariesComment {
+  string itineraryId = 1;
+  string content = 2;
 }
 
 message AllItineraries {
@@ -70,10 +217,10 @@ message Itineraries {
   string description = 2;
   string startDate = 3;
   string endDate = 4;
-  repeated Descriptions descriptions = 5;
+  repeated Description descriptions = 5;
 }
 
-message Descriptions {
+message Description {
   string name = 1;
   string startDate = 2;
   string endDate = 3;
@@ -86,8 +233,8 @@ message LikeInfo {
   string likedAt = 3;
 }
 
-message Comments {
-  repeated Comment comments = 1;
+message StoryComments {
+  repeated StoryCommentInfo comments = 1;
 }
 
 message FilterComment {
@@ -96,7 +243,7 @@ message FilterComment {
   int64 offset = 3;
 }
 
-message CommentInfo {
+message StoryCommentInfo {
   string id = 1;
   string content = 2;
   string author_id = 3;
@@ -104,7 +251,7 @@ message CommentInfo {
   string createdAt = 5;
 }
 
-message Comment {
+message StoryComment {
   string storyId = 1;
   string content = 2;
 }
