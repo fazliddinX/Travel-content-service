@@ -1,0 +1,176 @@
+syntax = "proto3";
+
+option go_package = "genproto/auth_service";
+
+package protos;
+
+service Content {
+  rpc CreateStory(Story) returns (Story);
+  rpc UpdateStory(PutStory) returns (Story);
+  rpc DeleteStory(StoryId) returns (Success);
+  rpc GetStories(FilterStories) returns (Stories);
+  rpc GetFullStoryInfo(StoryId) returns (FullStory);
+  rpc AddComment(Comment) returns (CommentInfo);
+  rpc GetComments(FilterComment) returns (Comments);
+  rpc AddLike(StoryId) returns (LikeInfo);
+  rpc CreateItineraries(Itineraries) returns (InfoItineraries);
+  rpc UpdateItineraries(PutItineraries) returns (InfoItineraries);
+  rpc DeleteItineraries(ItinerariesId) returns (Success);
+  rpc GetItineraries (FilterItineraries) returns (AllItineraries);
+
+
+}
+
+message AllItineraries {
+  repeated GItineraries itineraries = 1;
+  int64 page = 2;
+  int64 limit = 3;
+}
+
+message GItineraries {
+  string id = 1;
+  string title = 2;
+  Author author = 3;
+  string startDate = 4;
+  string endDate = 5;
+  int64 likeCount = 6;
+  int64 commentCount = 7;
+  string createdAt = 8;
+}
+
+message FilterItineraries {
+  string title = 1;
+  int64 likeCount = 2;
+  int64 limit = 3;
+  int64 offset = 4;
+
+}
+
+message ItinerariesId {
+  string id = 1;
+}
+
+message PutItineraries {
+  string title = 1;
+  string description = 2;
+}
+
+message InfoItineraries {
+  string id = 1;
+  string title = 2;
+  string descriptions = 3;
+  string startDate = 4;
+  string endDate = 5;
+  string authorId = 6;
+  string createdAt = 7;
+}
+
+message Itineraries {
+  string title = 1;
+  string description = 2;
+  string startDate = 3;
+  string endDate = 4;
+  repeated Descriptions descriptions = 5;
+}
+
+message Descriptions {
+  string name = 1;
+  string startDate = 2;
+  string endDate = 3;
+  repeated  string activities = 4;
+}
+
+message LikeInfo {
+  string storyId = 1;
+  string userId = 2;
+  string likedAt = 3;
+}
+
+message Comments {
+  repeated Comment comments = 1;
+}
+
+message FilterComment {
+  string userName = 1;
+  int64 limit = 2;
+  int64 offset = 3;
+}
+
+message CommentInfo {
+  string id = 1;
+  string content = 2;
+  string author_id = 3;
+  string story_id = 4;
+  string createdAt = 5;
+}
+
+message Comment {
+  string storyId = 1;
+  string content = 2;
+}
+
+message FullStory {
+  string id = 1;
+  string title = 2;
+  string content = 3;
+  string location = 4;
+  repeated string tags = 5;
+  Author author = 6;
+  int64 likeCount = 7;
+  int64 commentCount = 8;
+  string createdAt = 9;
+  string updated_at = 10;
+
+}
+
+message Stories {
+  repeated GetStory stories = 1;
+}
+
+message Author {
+  string id = 1;
+  string userName = 2;
+  string fullName = 3;
+}
+
+message GetStory {
+  string id = 1;
+  string title = 2;
+  Author author = 3;
+  string location = 4;
+  int64 likeCount = 5;
+  int64 commentCount = 6;
+  string crated_at = 7;
+
+}
+
+message FilterStories {
+  string title = 1;
+  string location = 2;
+  int64 limit = 3;
+  int64 offset = 4;
+}
+
+message Success {
+  string message = 1;
+}
+
+message StoryId {
+  string id = 1;
+}
+
+message PutStory {
+  string title = 1;
+  string content = 2;
+}
+
+message Story {
+  string id = 1;
+  string title = 2;
+  string content = 3;
+  string location = 4;
+  repeated string tags = 5;
+  string author_id = 6;
+  string created_at = 7;
+  string updated_at = 8;
+}
