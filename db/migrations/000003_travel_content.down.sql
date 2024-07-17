@@ -1,1 +1,1 @@
-DROP TABLE story_tags;
+DROP TABLE comments;

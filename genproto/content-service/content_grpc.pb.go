@@ -26,11 +26,12 @@ const (
 	Content_GetFullStoryInfo_FullMethodName        = "/protos.Content/GetFullStoryInfo"
 	Content_AddCommentStory_FullMethodName         = "/protos.Content/AddCommentStory"
 	Content_GetComments_FullMethodName             = "/protos.Content/GetComments"
-	Content_AddLike_FullMethodName                 = "/protos.Content/AddLike"
+	Content_AddLikeToStory_FullMethodName          = "/protos.Content/AddLikeToStory"
 	Content_CreateItineraries_FullMethodName       = "/protos.Content/CreateItineraries"
 	Content_UpdateItineraries_FullMethodName       = "/protos.Content/UpdateItineraries"
 	Content_DeleteItineraries_FullMethodName       = "/protos.Content/DeleteItineraries"
 	Content_GetItineraries_FullMethodName          = "/protos.Content/GetItineraries"
+	Content_AddLikeItineraries_FullMethodName      = "/protos.Content/AddLikeItineraries"
 	Content_AddCommentItineraries_FullMethodName   = "/protos.Content/AddCommentItineraries"
 	Content_GetDescriptions_FullMethodName         = "/protos.Content/GetDescriptions"
 	Content_GetDestinationById_FullMethodName      = "/protos.Content/GetDestinationById"
@@ -48,16 +49,17 @@ const (
 type ContentClient interface {
 	CreateStory(ctx context.Context, in *Story, opts ...grpc.CallOption) (*Story, error)
 	UpdateStory(ctx context.Context, in *PutStory, opts ...grpc.CallOption) (*Story, error)
-	DeleteStory(ctx context.Context, in *StoryId, opts ...grpc.CallOption) (*Success, error)
+	DeleteStory(ctx context.Context, in *StoryId, opts ...grpc.CallOption) (*MessageSuccess, error)
 	GetStories(ctx context.Context, in *FilterStories, opts ...grpc.CallOption) (*Stories, error)
-	GetFullStoryInfo(ctx context.Context, in *StoryId, opts ...grpc.CallOption) (*FullStory, error)
+	GetFullStoryInfo(ctx context.Context, in *LikeReq, opts ...grpc.CallOption) (*FullStory, error)
 	AddCommentStory(ctx context.Context, in *StoryComment, opts ...grpc.CallOption) (*StoryCommentInfo, error)
 	GetComments(ctx context.Context, in *FilterComment, opts ...grpc.CallOption) (*StoryComments, error)
-	AddLike(ctx context.Context, in *StoryId, opts ...grpc.CallOption) (*LikeInfo, error)
+	AddLikeToStory(ctx context.Context, in *LikeReq, opts ...grpc.CallOption) (*LikeInfo, error)
 	CreateItineraries(ctx context.Context, in *Itineraries, opts ...grpc.CallOption) (*InfoItineraries, error)
 	UpdateItineraries(ctx context.Context, in *PutItineraries, opts ...grpc.CallOption) (*InfoItineraries, error)
-	DeleteItineraries(ctx context.Context, in *ItinerariesId, opts ...grpc.CallOption) (*Success, error)
+	DeleteItineraries(ctx context.Context, in *ItinerariesId, opts ...grpc.CallOption) (*MessageSuccess, error)
 	GetItineraries(ctx context.Context, in *FilterItineraries, opts ...grpc.CallOption) (*AllItineraries, error)
+	AddLikeItineraries(ctx context.Context, in *LikeItinerariesInfo, opts ...grpc.CallOption) (*LikeItinerariesInfo, error)
 	AddCommentItineraries(ctx context.Context, in *ItinerariesComment, opts ...grpc.CallOption) (*ItinerariesCommentInfo, error)
 	GetDescriptions(ctx context.Context, in *FilterDestinations, opts ...grpc.CallOption) (*Destinations, error)
 	GetDestinationById(ctx context.Context, in *DestinationId, opts ...grpc.CallOption) (*FullDestinations, error)
@@ -66,7 +68,7 @@ type ContentClient interface {
 	CreateTravelTips(ctx context.Context, in *TravelTipReq, opts ...grpc.CallOption) (*TravelTipRes, error)
 	GetTravelTips(ctx context.Context, in *FilterTravelTip, opts ...grpc.CallOption) (*TravelTips, error)
 	GetUserStatistics(ctx context.Context, in *UserId, opts ...grpc.CallOption) (*UserStatistics, error)
-	GetTrendingDestinations(ctx context.Context, in *Void, opts ...grpc.CallOption) (*Destination, error)
+	GetTrendingDestinations(ctx context.Context, in *Void, opts ...grpc.CallOption) (*DestinationsRes, error)
 }
 
 type contentClient struct {
@@ -97,9 +99,9 @@ func (c *contentClient) UpdateStory(ctx context.Context, in *PutStory, opts ...g
 	return out, nil
 }
 
-func (c *contentClient) DeleteStory(ctx context.Context, in *StoryId, opts ...grpc.CallOption) (*Success, error) {
+func (c *contentClient) DeleteStory(ctx context.Context, in *StoryId, opts ...grpc.CallOption) (*MessageSuccess, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Success)
+	out := new(MessageSuccess)
 	err := c.cc.Invoke(ctx, Content_DeleteStory_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -117,7 +119,7 @@ func (c *contentClient) GetStories(ctx context.Context, in *FilterStories, opts 
 	return out, nil
 }
 
-func (c *contentClient) GetFullStoryInfo(ctx context.Context, in *StoryId, opts ...grpc.CallOption) (*FullStory, error) {
+func (c *contentClient) GetFullStoryInfo(ctx context.Context, in *LikeReq, opts ...grpc.CallOption) (*FullStory, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(FullStory)
 	err := c.cc.Invoke(ctx, Content_GetFullStoryInfo_FullMethodName, in, out, cOpts...)
@@ -147,10 +149,10 @@ func (c *contentClient) GetComments(ctx context.Context, in *FilterComment, opts
 	return out, nil
 }
 
-func (c *contentClient) AddLike(ctx context.Context, in *StoryId, opts ...grpc.CallOption) (*LikeInfo, error) {
+func (c *contentClient) AddLikeToStory(ctx context.Context, in *LikeReq, opts ...grpc.CallOption) (*LikeInfo, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(LikeInfo)
-	err := c.cc.Invoke(ctx, Content_AddLike_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Content_AddLikeToStory_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -177,9 +179,9 @@ func (c *contentClient) UpdateItineraries(ctx context.Context, in *PutItinerarie
 	return out, nil
 }
 
-func (c *contentClient) DeleteItineraries(ctx context.Context, in *ItinerariesId, opts ...grpc.CallOption) (*Success, error) {
+func (c *contentClient) DeleteItineraries(ctx context.Context, in *ItinerariesId, opts ...grpc.CallOption) (*MessageSuccess, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Success)
+	out := new(MessageSuccess)
 	err := c.cc.Invoke(ctx, Content_DeleteItineraries_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -191,6 +193,16 @@ func (c *contentClient) GetItineraries(ctx context.Context, in *FilterItinerarie
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AllItineraries)
 	err := c.cc.Invoke(ctx, Content_GetItineraries_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *contentClient) AddLikeItineraries(ctx context.Context, in *LikeItinerariesInfo, opts ...grpc.CallOption) (*LikeItinerariesInfo, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LikeItinerariesInfo)
+	err := c.cc.Invoke(ctx, Content_AddLikeItineraries_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -277,9 +289,9 @@ func (c *contentClient) GetUserStatistics(ctx context.Context, in *UserId, opts 
 	return out, nil
 }
 
-func (c *contentClient) GetTrendingDestinations(ctx context.Context, in *Void, opts ...grpc.CallOption) (*Destination, error) {
+func (c *contentClient) GetTrendingDestinations(ctx context.Context, in *Void, opts ...grpc.CallOption) (*DestinationsRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Destination)
+	out := new(DestinationsRes)
 	err := c.cc.Invoke(ctx, Content_GetTrendingDestinations_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -293,16 +305,17 @@ func (c *contentClient) GetTrendingDestinations(ctx context.Context, in *Void, o
 type ContentServer interface {
 	CreateStory(context.Context, *Story) (*Story, error)
 	UpdateStory(context.Context, *PutStory) (*Story, error)
-	DeleteStory(context.Context, *StoryId) (*Success, error)
+	DeleteStory(context.Context, *StoryId) (*MessageSuccess, error)
 	GetStories(context.Context, *FilterStories) (*Stories, error)
-	GetFullStoryInfo(context.Context, *StoryId) (*FullStory, error)
+	GetFullStoryInfo(context.Context, *LikeReq) (*FullStory, error)
 	AddCommentStory(context.Context, *StoryComment) (*StoryCommentInfo, error)
 	GetComments(context.Context, *FilterComment) (*StoryComments, error)
-	AddLike(context.Context, *StoryId) (*LikeInfo, error)
+	AddLikeToStory(context.Context, *LikeReq) (*LikeInfo, error)
 	CreateItineraries(context.Context, *Itineraries) (*InfoItineraries, error)
 	UpdateItineraries(context.Context, *PutItineraries) (*InfoItineraries, error)
-	DeleteItineraries(context.Context, *ItinerariesId) (*Success, error)
+	DeleteItineraries(context.Context, *ItinerariesId) (*MessageSuccess, error)
 	GetItineraries(context.Context, *FilterItineraries) (*AllItineraries, error)
+	AddLikeItineraries(context.Context, *LikeItinerariesInfo) (*LikeItinerariesInfo, error)
 	AddCommentItineraries(context.Context, *ItinerariesComment) (*ItinerariesCommentInfo, error)
 	GetDescriptions(context.Context, *FilterDestinations) (*Destinations, error)
 	GetDestinationById(context.Context, *DestinationId) (*FullDestinations, error)
@@ -311,7 +324,7 @@ type ContentServer interface {
 	CreateTravelTips(context.Context, *TravelTipReq) (*TravelTipRes, error)
 	GetTravelTips(context.Context, *FilterTravelTip) (*TravelTips, error)
 	GetUserStatistics(context.Context, *UserId) (*UserStatistics, error)
-	GetTrendingDestinations(context.Context, *Void) (*Destination, error)
+	GetTrendingDestinations(context.Context, *Void) (*DestinationsRes, error)
 	mustEmbedUnimplementedContentServer()
 }
 
@@ -325,13 +338,13 @@ func (UnimplementedContentServer) CreateStory(context.Context, *Story) (*Story, 
 func (UnimplementedContentServer) UpdateStory(context.Context, *PutStory) (*Story, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateStory not implemented")
 }
-func (UnimplementedContentServer) DeleteStory(context.Context, *StoryId) (*Success, error) {
+func (UnimplementedContentServer) DeleteStory(context.Context, *StoryId) (*MessageSuccess, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteStory not implemented")
 }
 func (UnimplementedContentServer) GetStories(context.Context, *FilterStories) (*Stories, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStories not implemented")
 }
-func (UnimplementedContentServer) GetFullStoryInfo(context.Context, *StoryId) (*FullStory, error) {
+func (UnimplementedContentServer) GetFullStoryInfo(context.Context, *LikeReq) (*FullStory, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFullStoryInfo not implemented")
 }
 func (UnimplementedContentServer) AddCommentStory(context.Context, *StoryComment) (*StoryCommentInfo, error) {
@@ -340,8 +353,8 @@ func (UnimplementedContentServer) AddCommentStory(context.Context, *StoryComment
 func (UnimplementedContentServer) GetComments(context.Context, *FilterComment) (*StoryComments, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetComments not implemented")
 }
-func (UnimplementedContentServer) AddLike(context.Context, *StoryId) (*LikeInfo, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddLike not implemented")
+func (UnimplementedContentServer) AddLikeToStory(context.Context, *LikeReq) (*LikeInfo, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddLikeToStory not implemented")
 }
 func (UnimplementedContentServer) CreateItineraries(context.Context, *Itineraries) (*InfoItineraries, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateItineraries not implemented")
@@ -349,11 +362,14 @@ func (UnimplementedContentServer) CreateItineraries(context.Context, *Itinerarie
 func (UnimplementedContentServer) UpdateItineraries(context.Context, *PutItineraries) (*InfoItineraries, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateItineraries not implemented")
 }
-func (UnimplementedContentServer) DeleteItineraries(context.Context, *ItinerariesId) (*Success, error) {
+func (UnimplementedContentServer) DeleteItineraries(context.Context, *ItinerariesId) (*MessageSuccess, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteItineraries not implemented")
 }
 func (UnimplementedContentServer) GetItineraries(context.Context, *FilterItineraries) (*AllItineraries, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetItineraries not implemented")
+}
+func (UnimplementedContentServer) AddLikeItineraries(context.Context, *LikeItinerariesInfo) (*LikeItinerariesInfo, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddLikeItineraries not implemented")
 }
 func (UnimplementedContentServer) AddCommentItineraries(context.Context, *ItinerariesComment) (*ItinerariesCommentInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddCommentItineraries not implemented")
@@ -379,7 +395,7 @@ func (UnimplementedContentServer) GetTravelTips(context.Context, *FilterTravelTi
 func (UnimplementedContentServer) GetUserStatistics(context.Context, *UserId) (*UserStatistics, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserStatistics not implemented")
 }
-func (UnimplementedContentServer) GetTrendingDestinations(context.Context, *Void) (*Destination, error) {
+func (UnimplementedContentServer) GetTrendingDestinations(context.Context, *Void) (*DestinationsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTrendingDestinations not implemented")
 }
 func (UnimplementedContentServer) mustEmbedUnimplementedContentServer() {}
@@ -468,7 +484,7 @@ func _Content_GetStories_Handler(srv interface{}, ctx context.Context, dec func(
 }
 
 func _Content_GetFullStoryInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StoryId)
+	in := new(LikeReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -480,7 +496,7 @@ func _Content_GetFullStoryInfo_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: Content_GetFullStoryInfo_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ContentServer).GetFullStoryInfo(ctx, req.(*StoryId))
+		return srv.(ContentServer).GetFullStoryInfo(ctx, req.(*LikeReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -521,20 +537,20 @@ func _Content_GetComments_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Content_AddLike_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StoryId)
+func _Content_AddLikeToStory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LikeReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ContentServer).AddLike(ctx, in)
+		return srv.(ContentServer).AddLikeToStory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Content_AddLike_FullMethodName,
+		FullMethod: Content_AddLikeToStory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ContentServer).AddLike(ctx, req.(*StoryId))
+		return srv.(ContentServer).AddLikeToStory(ctx, req.(*LikeReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -607,6 +623,24 @@ func _Content_GetItineraries_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ContentServer).GetItineraries(ctx, req.(*FilterItineraries))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Content_AddLikeItineraries_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LikeItinerariesInfo)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ContentServer).AddLikeItineraries(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Content_AddLikeItineraries_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ContentServer).AddLikeItineraries(ctx, req.(*LikeItinerariesInfo))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -809,8 +843,8 @@ var Content_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Content_GetComments_Handler,
 		},
 		{
-			MethodName: "AddLike",
-			Handler:    _Content_AddLike_Handler,
+			MethodName: "AddLikeToStory",
+			Handler:    _Content_AddLikeToStory_Handler,
 		},
 		{
 			MethodName: "CreateItineraries",
@@ -827,6 +861,10 @@ var Content_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetItineraries",
 			Handler:    _Content_GetItineraries_Handler,
+		},
+		{
+			MethodName: "AddLikeItineraries",
+			Handler:    _Content_AddLikeItineraries_Handler,
 		},
 		{
 			MethodName: "AddCommentItineraries",

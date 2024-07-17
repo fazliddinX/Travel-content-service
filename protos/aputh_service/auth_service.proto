@@ -1,0 +1,143 @@
+syntax = "proto3";
+
+option go_package = "genproto/auth_service";
+
+package protos;
+
+service AuthService {
+  rpc Register(RegisterUserReq) returns (RegisterUserRes);
+  rpc Login(LoginRequest) returns (Tokens);
+  rpc GetProfile(Id) returns (Profile);
+  rpc UpdateProfile(UpdateUser) returns (Profile);
+  rpc GetUsers(FilterGet) returns (Users);
+  rpc Delete(Id) returns (Success);
+  rpc PasswordRecovery(Email) returns (Success);
+  rpc TokenRenewal(RefreshToken) returns (Tokens);
+  rpc Logout(Id) returns (Success);
+  rpc ActivityProfile(Id) returns (UserActivities);
+  rpc Follow(FollowRequest) returns (FollowResponse);
+  rpc Unfollow(FollowingId) returns (Success);
+  rpc GetFollowers(FilterFollowers) returns (Followers);
+}
+
+message FollowingId {
+  string followingId = 1;
+}
+
+message RegisterUserReq {
+  string userName = 1;
+  string email = 2;
+  string password = 3;
+  string fullName = 4;
+}
+
+message RegisterUserRes {
+  string id = 1;
+  string userName = 2;
+  string email = 3;
+  string fullName = 4;
+  string createdAt = 5;
+
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message Tokens {
+  string accessToken = 1;
+  string refreshToken = 2;
+  string expireIn = 3;
+}
+
+message Id {
+  string id = 1;
+}
+
+message Profile {
+  string id = 1;
+  string userName = 2;
+  string email = 3;
+  string fullName = 4;
+  string bio = 5;
+  int64  countriesVisited = 6;
+  string createdAt = 7;
+  string updatedAt = 8;
+}
+
+message UpdateUser {
+  string id = 1;
+  string fullName = 2;
+  string bio = 3;
+  int64 countriesVisited = 4;
+}
+
+message FilterGet {
+  string userName = 1;
+  string fullName = 2;
+  int64 countriesVisited = 3;
+  int64 limit = 4;
+  int64 offset = 5;
+}
+
+message User {
+  string id = 1;
+  string userName = 2;
+  string fullName = 3;
+  int64 countriesVisited = 4;
+}
+
+message Users {
+  repeated User users = 1;
+}
+
+message Success {
+  string successful = 1;
+}
+
+message Email {
+  string email = 1;
+}
+
+message RefreshToken {
+  string refreshToken = 1;
+}
+
+message UserActivities {
+  string id = 1;
+  int64 storiesCount = 2;
+  int64 commentCount = 3;
+  int64 likeCounts = 4;
+  int64 countriesVisited = 5;
+  string lastActive = 6;
+}
+
+message FollowRequest{
+  string followerId = 1;
+  string followingId = 2;
+}
+
+message FollowResponse {
+  string followerId = 1;
+  string followingId = 2;
+  string followed_at = 3;
+}
+
+message FilterFollowers {
+  string Id = 1;
+  string userName = 2;
+  string email = 3;
+  int64 limit = 4;
+  int64 offset = 5;
+}
+
+message Follower {
+  string id = 1;
+  string userName = 2;
+  string email = 3;
+}
+
+message Followers {
+  repeated Follower followers = 1;
+}

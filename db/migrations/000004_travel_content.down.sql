@@ -1,1 +1,1 @@
-DROP TABLE comments;
+DROP TABLE story_likes;
