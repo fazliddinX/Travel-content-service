@@ -1,1 +1,0 @@
-DROP TABLE story_likes;

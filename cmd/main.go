@@ -1,59 +1,80 @@
 package main
 
 import (
-	content_service "Content-Service/genproto/content-service"
-	"Content-Service/logger"
-	"Content-Service/service"
-	"Content-Service/storage/postgres"
-	"Content-Service/storage/postgres/Itineraries"
-	comment_like "Content-Service/storage/postgres/comment-like"
-	"Content-Service/storage/postgres/destinations"
-	"Content-Service/storage/postgres/messages"
-	"Content-Service/storage/postgres/storye"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
+	"content-service/cmd/server"
+	"content-service/config"
+	"content-service/generated/communication"
+	"content-service/generated/destination"
+	"content-service/generated/itineraries"
+	"content-service/generated/stories"
+	"content-service/logs"
+	"content-service/service"
+	"content-service/storage/postgres"
+	"content-service/storage/redis"
 	"log"
+	"log/slog"
 	"net"
+
+	"google.golang.org/grpc"
 )
 
 func main() {
-	logger := logger.InitLogger()
-	logger.Info("main started")
-
-	db, err := postgres.Connection()
+	logs.InitLogger()
+	logs.Logger.Info("Starting the server ...")
+	db, err := postgres.ConnectDB()
 	if err != nil {
-		logger.Error("error connecting to database", "error", err)
-		log.Fatalln(err)
+		logs.Logger.Error("Error connection th postgres", slog.String("error", err.Error()))
+		log.Fatal(err)
 	}
 	defer db.Close()
 
-	lister, err := net.Listen("tcp", ":5052")
+	cfg := config.Load()
+	listener, err := net.Listen("tcp", cfg.GRPC_PORT)
 	if err != nil {
-		logger.Error("error listening on tcp", "error", err)
-		log.Fatalln(err)
+		logs.Logger.Error("Error create to new listener", "error", err.Error())
+		log.Fatal(err)
 	}
-	defer lister.Close()
 
-	client, err := grpc.NewClient(":5051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	userClient, err := server.NewUserClient(cfg)
 	if err != nil {
-		logger.Error("error creating grpc client", "error", err)
-		log.Fatalln(err)
+		logs.Logger.Error("Error in conn userclient", slog.String("error", err.Error()))
+		log.Fatal(err)
 	}
-	st := storye.NewStoryRepo(logger, db, client)
 
-	des := destinations.NewDestinationRepo(db, logger)
+	s := grpc.NewServer()
+	stories.RegisterTravelStoriesServiceServer(s, &service.TravelStoriesService{
+		StoriyRepo: postgres.NewTravelStoriesRepo(db),
+		Logger:     logs.Logger,
+		UserClient: userClient,
+	})
 
-	iti := Itineraries.NewItinerariesRepo(db, logger, des, client)
+	itineraries.RegisterItinerariesServiceServer(s, &service.ItineraryService{
+		ItineraryRepo: postgres.NewItinerariesRepo(db),
+		Storyrepo:     postgres.NewTravelStoriesRepo(db),
+		UserClient:    userClient,
+		Logger:        logs.Logger,
+	})
 
-	cl := comment_like.NewCommentLikeRepo(logger, db, st, iti)
+	destination.RegisterTravelDestinationServiceServer(s, &service.DestinationService{
+		DestinationRepo: postgres.NewDestinationRepo(db),
+		UserClient:      &userClient,
+		Logger:          logs.Logger,
+		RedisClient:     redis.NewRedisClient(),
+	})
 
-	msg := messages.NewMessageRepo(db, logger)
+	communication.RegisterCommunicationServiceServer(s, &service.CommunicationService{
+		CommunicationRepo: postgres.NewCommunicationRepo(db),
+		StoryRepo:         postgres.NewTravelStoriesRepo(db),
+		ItineraryRepo:     postgres.NewItinerariesRepo(db),
+		UserClient:        userClient,
+		Logger:            logs.Logger,
+	})
 
-	service1 := service.NewService(cl, des, iti, msg, st)
-	grpcServer := grpc.NewServer()
+	logs.Logger.Info("server is running ", "PORT", cfg.GRPC_PORT)
 
-	content_service.RegisterContentServer(grpcServer, service1)
-
-	logger.Info("service running on port :5052")
-	log.Fatal(grpcServer.Serve(lister))
+	log.Printf("server is running on %v...", listener.Addr())
+	if err := s.Serve(listener); err != nil {
+		logs.Logger.Error("Faild server is running", "error", err.Error())
+		log.Fatal(err)
+	}
 }

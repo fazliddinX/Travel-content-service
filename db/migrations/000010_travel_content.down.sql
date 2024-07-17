@@ -1,1 +1,0 @@
-DROP TABLE travel_tips;
