@@ -18,72 +18,43 @@ func NewTravelStoriesRepo(db *sql.DB) *TravelStoriesRepo {
 }
 
 func (repo *TravelStoriesRepo) CreateTravelStory(req *pb.CreateTravelStoryRequest) (*pb.CreateTravelStoryResponse, error) {
-	var resp pb.CreateTravelStoryResponse
+	var storyResp pb.CreateTravelStoryResponse
 
 	err := repo.DB.QueryRow(`
-		INSERT INTO stories (
-			title,
-			content,
-			location,
-			author_id
-		)
-		VALUES (
-			$1,
-			$2,
-			$3,
-			$4
-		)
-		RETURNING
-			id,
-			title,
-			content,
-			location,
-			author_id,
-			created_at
+		INSERT INTO stories (title, content, location, author_id)
+		VALUES ($1, $2, $3, $4)
+		RETURNING id, title, content, location, author_id, created_at
 	`, req.Title, req.Content, req.Location, req.AuthorId).
-		Scan(&resp.Id, &resp.Title, &resp.Content, &resp.Location, &resp.AuthorId, &resp.CreatedAt)
+		Scan(&storyResp.Id, &storyResp.Title, &storyResp.Content, &storyResp.Location, &storyResp.AuthorId, &storyResp.CreatedAt)
 
 	if err != nil {
 		return nil, err
 	}
 
-	return &resp, nil
+	return &storyResp, nil
 }
 
 func (repo *TravelStoriesRepo) UpdateTravelStory(req *pb.UpdateTravelStoryRequest) (*pb.UpdateTravelStoryResponse, error) {
-	var resp pb.UpdateTravelStoryResponse
+	var storyResp pb.UpdateTravelStoryResponse
+
 	err := repo.DB.QueryRow(`
-		UPDATE
-			stories
-		SET
-			title = $1,
-			content = $2
-		WHERE
-			id = $3 AND deleted_at = 0
-		RETURNING
-			id,
-			title,
-			content,
-			location,
-			author_id,
-			updated_at
-	`, req.Title, req.Content, req.Id).Scan(&resp.Id, &resp.Title, &resp.Content, &resp.Location, &resp.AuthorId, &resp.UpdatedAt)
+		UPDATE stories SET title = $1, content = $2
+		WHERE id = $3 AND deleted_at = 0
+		RETURNING id, title, content, location, author_id, updated_at
+	`, req.Title, req.Content, req.Id).
+		Scan(&storyResp.Id, &storyResp.Title, &storyResp.Content, &storyResp.Location, &storyResp.AuthorId, &storyResp.UpdatedAt)
 
 	if err != nil {
 		return nil, err
 	}
 
-	return &resp, nil
+	return &storyResp, nil
 }
 
 func (repo *TravelStoriesRepo) DeleteTravelStory(id string) (*pb.DeleteTravelStoryResponse, error) {
 	res, err := repo.DB.Exec(`
-		UPDATE 
-			stories
-		SET
-			deleted_at = DATE_PART('epoch', CURRENT_TIMESTAMP)::INT
-		WHERE
-			deleted_at = 0 AND id = $1
+		UPDATE stories SET deleted_at = DATE_PART('epoch', CURRENT_TIMESTAMP)::INT
+		WHERE deleted_at = 0 AND id = $1
 	`, id)
 
 	if err != nil {
@@ -96,39 +67,32 @@ func (repo *TravelStoriesRepo) DeleteTravelStory(id string) (*pb.DeleteTravelSto
 	if err != nil {
 		return nil, err
 	}
+
 	if rowsAffected == 0 {
-		err := sql.ErrNoRows
-		return nil, err
+		return nil, sql.ErrNoRows
 	}
+
 	return &pb.DeleteTravelStoryResponse{
 		Message: "Story successfully deleted",
 	}, nil
 }
 
 func (repo *TravelStoriesRepo) GetTravelStories(req *pb.ListTravelStoryRequest) (*pb.ListTravelStoryResponse, error) {
-	var resp []*pb.TravelStory
+	var stories []*pb.TravelStory
 	offset := (req.Page - 1) * req.Limit
 
 	rows, err := repo.DB.Query(`
-		SELECT
-			id,
-			title,
-			author_id,
-			location,
-			created_at
-		FROM
-			stories
-		WHERE
-			deleted_at = 0
-		ORDER BY
-			created_at DESC
-		OFFSET $1
-		LIMIT $2
+		SELECT id, title, author_id, location, created_at
+		FROM stories
+		WHERE deleted_at = 0
+		ORDER BY created_at DESC
+		OFFSET $1 LIMIT $2
 	`, offset, req.Limit)
 
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		var story pb.TravelStory
@@ -140,20 +104,16 @@ func (repo *TravelStoriesRepo) GetTravelStories(req *pb.ListTravelStoryRequest) 
 		}
 
 		story.Author = &author
-		resp = append(resp, &story)
+		stories = append(stories, &story)
 	}
+
 	if err = rows.Err(); err != nil {
 		return nil, err
 	}
 
 	var total int32
 	err = repo.DB.QueryRow(`
-		SELECT 
-			COUNT(*) 
-		FROM 
-			stories
-		WHERE 
-			deleted_at = 0
+		SELECT COUNT(*) FROM stories WHERE deleted_at = 0
 	`).Scan(&total)
 
 	if err != nil {
@@ -161,7 +121,7 @@ func (repo *TravelStoriesRepo) GetTravelStories(req *pb.ListTravelStoryRequest) 
 	}
 
 	return &pb.ListTravelStoryResponse{
-		Stories: resp,
+		Stories: stories,
 		Total:   total,
 		Limit:   req.Limit,
 		Page:    req.Page,
@@ -169,81 +129,52 @@ func (repo *TravelStoriesRepo) GetTravelStories(req *pb.ListTravelStoryRequest) 
 }
 
 func (repo *TravelStoriesRepo) GetTravelStory(id string) (*pb.GetTravelStoryResponse, error) {
-	var resp pb.GetTravelStoryResponse
+	var storyResp pb.GetTravelStoryResponse
 	var author pb.Author
 
 	err := repo.DB.QueryRow(`
-		SELECT
-			id,
-			title,
-			content,
-			location,
-			author_id,
-			created_at,
-			updated_at
-		FROM
-			stories
-		WHERE
-			deleted_at = 0 AND id = $1
-	`, id).Scan(&resp.Id, &resp.Title, &resp.Content, &resp.Location, &author.Id, &resp.CreatedAt, &resp.UpdatedAt)
+		SELECT id, title, content, location, author_id, created_at, updated_at
+		FROM stories
+		WHERE deleted_at = 0 AND id = $1
+	`, id).
+		Scan(&storyResp.Id, &storyResp.Title, &storyResp.Content, &storyResp.Location, &author.Id, &storyResp.CreatedAt, &storyResp.UpdatedAt)
 
 	if err != nil {
 		return nil, err
 	}
-	resp.Author = &author
 
-	return &resp, err
+	storyResp.Author = &author
+	return &storyResp, err
 }
 
 func (repo *TravelStoriesRepo) AddComment(req *pb.AddCommentRequest) (*pb.AddCommentResponse, error) {
-	var resp pb.AddCommentResponse
+	var commentResp pb.AddCommentResponse
 
 	err := repo.DB.QueryRow(`
-		INSERT INTO comments (
-			content,
-			author_id,
-			story_id
-		)
-		VALUES (
-			$1,
-			$2,
-			$3
-		)
-		RETURNING
-			id,
-			content,
-			author_id,
-			story_id,
-			created_at
-	`, req.Content, req.AuthorId, req.StoryId).Scan(&resp.Id, &resp.Content, &resp.AuthorId, &resp.StoryId, &resp.CreatedAt)
+		INSERT INTO comments (content, author_id, story_id)
+		VALUES ($1, $2, $3)
+		RETURNING id, content, author_id, story_id, created_at
+	`, req.Content, req.AuthorId, req.StoryId).
+		Scan(&commentResp.Id, &commentResp.Content, &commentResp.AuthorId, &commentResp.StoryId, &commentResp.CreatedAt)
 
 	if err != nil {
 		return nil, err
 	}
 
-	return &resp, nil
+	return &commentResp, nil
 }
 
 func (repo *TravelStoriesRepo) GetComments(req *pb.ListCommentsRequest) (*pb.ListCommentsResponse, error) {
-	var resp []*pb.Comment
+	var comments []*pb.Comment
 	offset := (req.Page - 1) * req.Limit
 
 	rows, err := repo.DB.Query(`
-		SELECT
-			c.id,
-			c.content,
-			c.author_id,
-			c.created_at
-		FROM
-			comments c
-		INNER JOIN
-			stories s ON c.story_id = s.id 
-		WHERE
-			s.deleted_at = 0
-		ORDER BY
-			c.created_at DESC
-		OFFSET $1
-		LIMIT $2
+		SELECT c.id, c.content, c.author_id, c.created_at
+		FROM comments c
+		INNER JOIN stories s ON c.story_id = s.id
+		WHERE s.deleted_at = 0
+		ORDER BY c.created_at DESC
+		OFFSET $1 LIMIT $2
 	`, offset, req.Limit)
 
 	if err != nil {
@@ -260,7 +191,7 @@ func (repo *TravelStoriesRepo) GetComments(req *pb.ListCommentsRequest) (*pb.Lis
 			return nil, err
 		}
 		comment.Author = &author
-		resp = append(resp, &comment)
+		comments = append(comments, &comment)
 	}
 
 	if err = rows.Err(); err != nil {
@@ -269,14 +200,10 @@ func (repo *TravelStoriesRepo) GetComments(req *pb.ListCommentsRequest) (*pb.Lis
 
 	var total int32
 	err = repo.DB.QueryRow(`
-		SELECT 
-			COUNT(*) 
-		FROM 
-			comments c
-		INNER JOIN
-			stories s ON c.story_id = s.id
-		WHERE
-			s.deleted_at = 0
+		SELECT COUNT(*)
+		FROM comments c
+		INNER JOIN stories s ON c.story_id = s.id
+		WHERE s.deleted_at = 0
 	`).Scan(&total)
 
 	if err != nil {
@@ -284,7 +211,7 @@ func (repo *TravelStoriesRepo) GetComments(req *pb.ListCommentsRequest) (*pb.Lis
 	}
 
 	return &pb.ListCommentsResponse{
-		Comments: resp,
+		Comments: comments,
 		Total:    total,
 		Limit:    req.Limit,
 		Page:     req.Page,
@@ -292,104 +219,75 @@ func (repo *TravelStoriesRepo) GetComments(req *pb.ListCommentsRequest) (*pb.Lis
 }
 
 func (repo *TravelStoriesRepo) AddLike(req *pb.AddLikeRequest) (*pb.AddLikeResponse, error) {
-	var resp pb.AddLikeResponse
+	var likeResp pb.AddLikeResponse
+
 	err := repo.DB.QueryRow(`
-		INSERT INTO likes (
-			user_id,
-			story_id
-		)
-		VALUES (
-			$1,
-			$2
-		)
-		RETURNING
-			user_id,
-			story_id,
-			created_at
-	`, req.UserId, req.StoryId).Scan(&resp.UserId, &resp.StoryId, &resp.LikedAt)
+		INSERT INTO likes (user_id, story_id)
+		VALUES ($1, $2)
+		RETURNING user_id, story_id, created_at
+	`, req.UserId, req.StoryId).
+		Scan(&likeResp.UserId, &likeResp.StoryId, &likeResp.LikedAt)
 
 	if err != nil {
 		return nil, err
 	}
 
-	return &resp, nil
+	return &likeResp, nil
 }
 
 func (repo *TravelStoriesRepo) CreateStoryTags(req models.StoryTag) error {
 	_, err := repo.DB.Exec(`
-		INSERT INTO story_tags (
-			story_id,
-			tag
-		)
-		VALUES (
-			$1,
-			$2
-		)
-		RETURNING
-			tag
+		INSERT INTO story_tags (story_id, tag)
+		VALUES ($1, $2)
 	`, req.StoryId, req.Tag)
 
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 }
 
 func (repo *TravelStoriesRepo) CountStories(id string) (int32, error) {
-	var total int32
+	var totalStories int32
+
 	err := repo.DB.QueryRow(`
-		SELECT 
-			COUNT(*) 
-		FROM 
-			stories
-		WHERE
-			deleted_at = 0 AND (author_id = $1 OR id = $1)
-	`, id).Scan(&total)
+		SELECT COUNT(*)
+		FROM stories
+		WHERE deleted_at = 0 AND (author_id = $1 OR id = $1)
+	`, id).Scan(&totalStories)
 
 	if err != nil {
 		return -1, err
 	}
 
-	return total, nil
+	return totalStories, nil
 }
 
 func (repo *TravelStoriesRepo) CountComments(id string) (int32, error) {
-	var total int32
+	var totalComments int32
+
 	err := repo.DB.QueryRow(`
-		SELECT 
-			COUNT(*) 
-		FROM 
-			comments c
-		INNER JOIN 
-			stories s ON c.story_id = s.id
-		WHERE 
-			s.deleted_at = 0 AND (c.author_id = $1 OR c.story_id = $1)
-	`, id).Scan(&total)
+		SELECT COUNT(*)
+		FROM comments c
+		INNER JOIN stories s ON c.story_id = s.id
+		WHERE s.deleted_at = 0 AND (c.author_id = $1 OR c.story_id = $1)
+	`, id).Scan(&totalComments)
 
 	if err != nil {
 		return -1, err
 	}
 
-	return total, nil
+	return totalComments, nil
 }
 
 func (repo *TravelStoriesRepo) MostPopularStory(id string) (*communication.MostPopularStory, error) {
-	var resp communication.MostPopularStory
+	var popularStory communication.MostPopularStory
 
 	err := repo.DB.QueryRow(`
-		SELECT 
-			id, 
-			title, 
-			likes_count 
-		FROM 
-			stories 
-		WHERE 
-			author_id = $1 AND deleted_at = 0 
-		ORDER BY 
-			likes_count DESC 
-		LIMIT 1;
-	`, id).Scan(&resp.Id, &resp.Title, &resp.LikesCount)
+		SELECT id, title, likes_count
+		FROM stories
+		WHERE author_id = $1 AND deleted_at = 0
+		ORDER BY likes_count DESC
+		LIMIT 1
+	`, id).
+		Scan(&popularStory.Id, &popularStory.Title, &popularStory.LikesCount)
 
-	return &resp, err
+	return &popularStory, err
 }

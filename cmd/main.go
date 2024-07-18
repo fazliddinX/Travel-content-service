@@ -7,7 +7,6 @@ import (
 	"content-service/generated/itineraries"
 	"content-service/generated/stories"
 	"content-service/logs"
-	"content-service/server"
 	"content-service/service"
 	"content-service/storage/postgres"
 	"content-service/storage/redis"
@@ -27,13 +26,15 @@ func main() {
 		log.Fatal(err)
 	}
 	defer db.Close()
+
 	cfg := config.Load()
 	listener, err := net.Listen("tcp", cfg.GRPC_PORT)
 	if err != nil {
 		logs.Logger.Error("Error create to new listener", "error", err.Error())
 		log.Fatal(err)
 	}
-	userClient, err := server.NewUserClient(cfg)
+
+	userClient, err := service.NewUserClient(cfg)
 	if err != nil {
 		logs.Logger.Error("Error in conn userclient", slog.String("error", err.Error()))
 		log.Fatal(err)

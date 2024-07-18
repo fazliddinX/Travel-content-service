@@ -119,3 +119,5 @@
 {"time":"2024-07-18T08:36:50.819885171+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
 {"time":"2024-07-18T08:37:47.681453085+05:00","level":"INFO","msg":"Starting the server ..."}
 {"time":"2024-07-18T08:37:47.687705041+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
+{"time":"2024-07-18T10:38:47.894933353+05:00","level":"INFO","msg":"Starting the server ..."}
+{"time":"2024-07-18T10:38:47.901885832+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}

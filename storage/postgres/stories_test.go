@@ -7,18 +7,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestInitDB(t *testing.T) {
-	db, err := ConnectDB()
-	if err != nil {
-		t.Fatalf("Failed to connect to database: %v", err)
-	}
-	defer db.Close()
-
-	if err := db.Ping(); err != nil {
-		t.Fatalf("Failed to ping database: %v", err)
-	}
-}
-
 func TestCreateTravelStory(t *testing.T) {
 	db, err := ConnectDB()
 	if err != nil {
@@ -58,7 +46,7 @@ func TestUpdateTravelStory(t *testing.T) {
 	repo := NewTravelStoriesRepo(db)
 
 	req := &pb.UpdateTravelStoryRequest{
-		Id:      "4905038e-a27f-4386-9771-99cc10d2c6cd", 
+		Id:      "4905038e-a27f-4386-9771-99cc10d2c6cd",
 		Title:   "Updated Title",
 		Content: "Updated Content",
 	}
@@ -151,7 +139,7 @@ func TestAddComment(t *testing.T) {
 	req := &pb.AddCommentRequest{
 		Content:  "Test Comment",
 		AuthorId: "6f645314-23f1-482e-bf83-417439ee582b",
-		StoryId:  "fbff2f5f-decc-445a-a7d2-aa5df278f534", 
+		StoryId:  "fbff2f5f-decc-445a-a7d2-aa5df278f534",
 	}
 
 	resp, err := repo.AddComment(req)
@@ -224,7 +212,7 @@ func TestCountStories(t *testing.T) {
 
 	repo := NewTravelStoriesRepo(db)
 
-	id := "6f645314-23f1-482e-bf83-417439ee582b" 
+	id := "6f645314-23f1-482e-bf83-417439ee582b"
 
 	total, err := repo.CountStories(id)
 	if err != nil {
@@ -243,28 +231,9 @@ func TestCountComments(t *testing.T) {
 
 	repo := NewTravelStoriesRepo(db)
 
-	id := "6f645314-23f1-482e-bf83-417439ee582b" 
+	id := "6f645314-23f1-482e-bf83-417439ee582b"
 
 	total, err := repo.CountComments(id)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	assert.NotZero(t, total)
-}
-
-func TestCountLikes(t *testing.T) {
-	db, err := ConnectDB()
-	if err != nil {
-		t.Fatalf("Failed to connect to database: %v", err)
-	}
-	defer db.Close()
-
-	repo := NewTravelStoriesRepo(db)
-
-	id := "6f645314-23f1-482e-bf83-417439ee582b" 
-
-	total, err := repo.CountLikes(id)
 	if err != nil {
 		t.Fatal(err)
 	}
