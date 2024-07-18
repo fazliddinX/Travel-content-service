@@ -109,3 +109,13 @@
 {"time":"2024-07-17T19:39:35.616877446+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
 {"time":"2024-07-17T19:42:03.336082529+05:00","level":"INFO","msg":"Starting the server ..."}
 {"time":"2024-07-17T19:42:03.353983174+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
+{"time":"2024-07-18T08:34:46.550009299+05:00","level":"INFO","msg":"Starting the server ..."}
+{"time":"2024-07-18T08:34:46.554093232+05:00","level":"ERROR","msg":"Error connection th postgres","error":"pq: password authentication failed for user \"postgres\""}
+{"time":"2024-07-18T08:35:38.639032327+05:00","level":"INFO","msg":"Starting the server ..."}
+{"time":"2024-07-18T08:35:38.643933571+05:00","level":"ERROR","msg":"Error connection th postgres","error":"pq: database \"content_service\" does not exist"}
+{"time":"2024-07-18T08:36:20.656405435+05:00","level":"INFO","msg":"Starting the server ..."}
+{"time":"2024-07-18T08:36:20.67134635+05:00","level":"ERROR","msg":"Error create to new listener","error":"listen tcp: address 50051: missing port in address"}
+{"time":"2024-07-18T08:36:50.815077025+05:00","level":"INFO","msg":"Starting the server ..."}
+{"time":"2024-07-18T08:36:50.819885171+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
+{"time":"2024-07-18T08:37:47.681453085+05:00","level":"INFO","msg":"Starting the server ..."}
+{"time":"2024-07-18T08:37:47.687705041+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}

@@ -112,22 +112,9 @@ func (s *ItineraryService) GetItinerary(ctx context.Context, in *pb.GetItinerary
 		destinations = append(destinations, &des)
 	}
 
-	likeCount, err := s.Storyrepo.CountLikes(itinerary.Author.Id)
-	if err != nil {
-		s.Logger.Error("Likelar sonini topishda xatolik", slog.String("error", err.Error()))
-		return nil, err
-	}
-	commentCount, err := s.Storyrepo.CountComments(itinerary.Author.Id)
-	if err != nil {
-		s.Logger.Error("commentlar sonini topishda xatolik", slog.String("error", err.Error()))
-		return nil, err
-	}
-
 	itinerary.Author.Username = author.Username
 	itinerary.Author.FullName = author.FullName
 	itinerary.Destinations = destinations
-	itinerary.CommentsCount = commentCount
-	itinerary.LikesCount = likeCount
 
 	return itinerary, nil
 }

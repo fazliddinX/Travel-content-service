@@ -92,16 +92,9 @@ func (s *TravelStoriesService) GetTravelStory(ctx context.Context, in *pb.GetTra
 		return nil, err
 	}
 
-	likeConunt, err := s.StoriyRepo.CountLikes(resp.Id)
-	if err != nil {
-		s.Logger.Error("sayohat hikoyasiga bosilgan likelar sonini olishda xatolik", slog.String("error", err.Error()))
-		return nil, err
-	}
-
 	resp.Author.Username = author.Username
 	resp.Author.FullName = author.FullName
 	resp.CommentsCount = commentCount
-	resp.LikesCount = likeConunt
 
 	return resp, nil
 }
@@ -155,14 +148,9 @@ func (s *TravelStoriesService) CountComments(ctx context.Context, in *pb.CountCo
 }
 
 func (s *TravelStoriesService) CountLikes(ctx context.Context, in *pb.CountLikesRequest) (*pb.CountLikesResponse, error) {
-	resp, err := s.StoriyRepo.CountLikes(in.UserId)
-	if err != nil {
-		s.Logger.Error("xatolik hikoyalarga bosilgan likelar sonini olishda", slog.String("error", err.Error()))
-		return nil, err
-	}
 
 	return &pb.CountLikesResponse{
-		CountLikes: int32(resp),
+		CountLikes: int32(0),
 	}, nil
 }
 

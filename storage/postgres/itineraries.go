@@ -23,7 +23,7 @@ func (repo *ItinerariesRepo) CreateItinerary(req *pb.CreateItineraryRequest) (*p
 		`INSERT INTO itineraries (title, description, start_date, end_date, author_id)
          VALUES ($1, $2, $3, $4, $5)
          RETURNING id, title, description, start_date, end_date, author_id, created_at`,
-		req.Title, req.Description, req.StartDate, req.EndDate, req.AuthorId,
+		req.Title, req.Description, req.StartDate, req.EndDate, req.AthorId,
 	).Scan(&response.Id, &response.Title, &response.Description, &response.StartDate, &response.EndDate, &response.AuthorId, &response.CreatedAt)
 	if err != nil {
 		return nil, err

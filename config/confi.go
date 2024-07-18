@@ -28,10 +28,10 @@ func Load() Config {
 	config.DB_HOST = cast.ToString(coalesce("DB_HOST", "localhost"))
 	config.DB_PORT = cast.ToString(coalesce("DB_PORT", "5432"))
 	config.DB_USER = cast.ToString(coalesce("DB_USER", "postgres"))
-	config.DB_NAME = cast.ToString(coalesce("DB_NAME", "postgres"))
-	config.DB_PASSWORD = cast.ToString(coalesce("DB_PASSWORD", "passwrod"))
-	config.USER_CLIENT_PORT = cast.ToString(coalesce("USER_CLIENT_PORT", 50050))
-	config.GRPC_PORT = cast.ToString(coalesce("GRPC_PORT", 50051))
+	config.DB_NAME = cast.ToString(coalesce("DB_NAME", "travel_content"))
+	config.DB_PASSWORD = cast.ToString(coalesce("DB_PASSWORD", "123321"))
+	config.USER_CLIENT_PORT = cast.ToString(coalesce("USER_CLIENT_PORT", ":50050"))
+	config.GRPC_PORT = cast.ToString(coalesce("GRPC_PORT", ":50051"))
 
 	return config
 }
