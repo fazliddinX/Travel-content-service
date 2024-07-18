@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+option go_package = "generated/destination";
+
+package travel_destination;
+
+service TravelDestinationService {
+    rpc ListTravelDestnations(ListDetinationRequest) returns (ListDetinationResponse);
+    rpc GetTravelDestination(GetDestinationRequest) returns (GetDestinationResponse);
+    rpc GetTrendDestinations(GetTrendDestinationRequest) returns (GetTrendDestinationResponse);
+}
+
+// CREATE DESTINATION
+message AddDestinationRequest {
+    string name = 1;
+    string country = 2;
+    string description = 3;
+    string best_time_to_visit = 4;
+    float average_cost_per_day = 5;
+    string currency = 6;
+    string language = 7;
+}
+
+message AddDestionationResponse {
+    string id = 1;
+    string name = 2;
+    string country = 3;
+    string description = 4;
+    string best_time_to_visit = 5;
+    float average_cost_per_day = 6;
+    string currency = 7;
+    string language = 8;
+    string created_at = 9;
+}
+
+// LIST TRAVEL DESTINATION
+message ListDetinationRequest {
+    string query = 1;
+    int32 page = 2;
+    int32 limit = 3;
+}
+
+message ListDetinationResponse {
+    repeated Destination destinations = 1;
+    int32 total = 2;
+    int32 page = 3;
+    int32 limit = 4;
+}
+
+message Destination {
+    string id = 1;
+    string name = 2;
+    string country = 3;
+    string description = 4;
+    repeated string popular_activities = 5;
+}
+
+// GET TRAVEL DESTINATION 
+message GetDestinationRequest {
+    string id = 1;
+}
+
+message GetDestinationResponse {
+    string id = 1;
+    string name = 2;
+    string country = 3;
+    string description = 4;
+    repeated string popular_activities = 5;
+    string best_time_to_visit = 6;
+    string average_cost_per_day = 7;
+    string currency = 8;
+    string language = 9;
+    repeated string top_attractions = 10;
+}
+
+// GET TERENDING DESTINATIONS
+message GetTrendDestinationRequest {
+    int32 limit = 1;
+}
+
+message GetTrendDestinationResponse {
+    repeated TrendDestination destinations = 1;
+    int32 total = 2;
+}
+
+message TrendDestination {
+    string id = 1;
+    string name = 2;
+    string country = 3;
+    string popularity_score = 4;
+    string trending_reason = 5;
+}
