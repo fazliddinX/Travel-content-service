@@ -5,6 +5,7 @@ import (
 	"content-service/generated/user"
 	"content-service/storage/postgres"
 	"context"
+	"fmt"
 	"log/slog"
 )
 
@@ -56,6 +57,8 @@ func (s *CommunicationService) ListMessage(ctx context.Context, in *pb.ListMessa
 }
 
 func (s *CommunicationService) AddTravelTips(ctx context.Context, in *pb.AddTravelTipsRequest) (*pb.AddTravelTipsResponse, error) {
+	fmt.Println("keldi")
+	fmt.Println("keldi")
 	resp, err := s.CommunicationRepo.CreateTravelTips(in)
 	if err != nil {
 		s.Logger.Error("yangi sayohat maslahatlarini qo'shishda xatolik", slog.String("error", err.Error()))

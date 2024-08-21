@@ -1,123 +1,50 @@
-{"time":"2024-07-16T12:44:44.646624622+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T12:44:44.657737552+05:00","level":"ERROR","msg":"Error create to new listener","error":"listen tcp: address 50051: missing port in address"}
-{"time":"2024-07-16T12:45:35.385952678+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T12:45:35.398039883+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-16T13:44:59.990428083+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T13:45:00.003127503+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-16T14:45:38.98926866+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T14:45:39.008713187+05:00","level":"ERROR","msg":"Error create to new listener","error":"listen tcp :50051: bind: address already in use"}
-{"time":"2024-07-16T14:45:50.930972647+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T14:45:50.949309411+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-16T15:11:33.041395984+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T15:11:33.049043948+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-16T15:15:23.798430981+05:00","level":"ERROR","msg":"hikoya haqida to'liq ma'lumot olishda xatolik","error":"pq: column \"uptadet_at\" does not exist"}
-{"time":"2024-07-16T15:17:15.338208108+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T15:17:15.345629384+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-16T15:17:19.144138441+05:00","level":"ERROR","msg":"hikoya haqida to'liq ma'lumot olishda xatolik","error":"pq: column \"uptated_at\" does not exist"}
-{"time":"2024-07-16T15:17:38.982042776+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T15:17:38.990403358+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-16T15:17:42.821864382+05:00","level":"ERROR","msg":"Xatolik hikoyaning authorni olishda","error":"failed to exit idle mode: dns resolver: missing port after port-separator colon"}
-{"time":"2024-07-16T15:31:06.738573421+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T15:31:06.74653616+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-16T15:33:13.624608084+05:00","level":"ERROR","msg":"Xatolik sayohat hikoyalarini olshida","error":"pq: operator does not exist: & integer"}
-{"time":"2024-07-16T15:34:52.222868536+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T15:34:52.230765866+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-16T15:34:56.242875039+05:00","level":"ERROR","msg":"Xatolik sayohat hikoyalarini olshida","error":"pq: syntax error at or near \"deleted_at\""}
-{"time":"2024-07-16T15:38:49.133408653+05:00","level":"ERROR","msg":"Xatolik hikoyalarga yozilgan izohlarni olishda","error":"pq: column reference \"id\" is ambiguous"}
-{"time":"2024-07-16T15:43:50.886284792+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T15:43:50.893999529+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-16T15:44:01.614641963+05:00","level":"ERROR","msg":"Xatolik hikoyalarga yozilgan izohlarni olishda","error":"pq: relation \"authors\" does not exist"}
-{"time":"2024-07-16T15:45:58.442084279+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T15:45:58.449581867+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-16T15:46:03.380151277+05:00","level":"ERROR","msg":"Xatolik hikoyalarga yozilgan izohlarni olishda","error":"pq: syntax error at or near \"FROM\""}
-{"time":"2024-07-16T15:47:38.581222991+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T15:47:38.589879392+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-16T16:02:55.620568569+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T16:02:55.628810587+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-16T16:13:45.963072278+05:00","level":"ERROR","msg":"sayohat rejasini tuzishda xatolik","error":"pq: column \"athor_id\" of relation \"itineraries\" does not exist"}
-{"time":"2024-07-16T16:15:50.148183613+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T16:15:50.155902207+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-16T16:16:26.341142369+05:00","level":"ERROR","msg":"Sahoyat rejasini tuzgan inson malumotini olishda xatolik","error":"rpc error: code = Unknown desc = sql: no rows in result set"}
-{"time":"2024-07-16T16:20:23.131721684+05:00","level":"ERROR","msg":"sayohat rejasi haqida to'liq ma'lumot olishda xatolik","error":"pq: syntax error at or near \"id\""}
-{"time":"2024-07-16T16:22:36.755570907+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T16:22:36.763109843+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-16T16:22:45.269649794+05:00","level":"ERROR","msg":"sahoyat rejasini tuzgan user haqida malumot olishda xatolik","error":"rpc error: code = Unknown desc = sql: no rows in result set"}
-{"time":"2024-07-16T16:24:16.488478078+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T16:24:16.502049007+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-16T16:24:29.765488158+05:00","level":"ERROR","msg":"sahoyat rejasini tuzgan user haqida malumot olishda xatolik","error":"rpc error: code = Unknown desc = sql: no rows in result set"}
-{"time":"2024-07-16T16:26:53.723801423+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T16:26:53.736361813+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-16T16:26:59.864730092+05:00","level":"ERROR","msg":"sahoyat rejasini tuzgan user haqida malumot olishda xatolik","error":"rpc error: code = Unknown desc = sql: no rows in result set"}
-{"time":"2024-07-16T16:28:35.708722825+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T16:28:35.72140546+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-16T16:29:42.914634141+05:00","level":"ERROR","msg":"Sayohat rejasini yangilashda xatolik","error":"pq: syntax error at or near \",\""}
-{"time":"2024-07-16T16:37:49.712455496+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-16T16:37:49.723158885+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T06:26:32.586744576+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T06:26:32.617200148+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T15:27:10.414794802+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T15:27:10.431499434+05:00","level":"ERROR","msg":"Error connection th postgres","error":"pq: password authentication failed for user \"postgres\""}
-{"time":"2024-07-17T15:27:32.404906093+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T15:27:32.422818114+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T15:35:05.753490771+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T15:35:05.771378035+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T15:35:41.810136437+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T15:35:41.826788352+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T15:59:45.906725244+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T15:59:45.924733823+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T16:01:28.870680569+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T16:01:28.888350122+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T16:08:17.147826664+05:00","level":"ERROR","msg":"Sayohat manzili haqaida malumot olishda xatolik","error":"sql: expected 8 destination arguments in Scan, not 9"}
-{"time":"2024-07-17T16:09:46.57621865+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T16:09:46.604219753+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T16:11:26.026240397+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T16:11:26.043408239+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T16:11:57.457062961+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T16:11:57.474634832+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T16:15:26.542716024+05:00","level":"ERROR","msg":"xabar jo'natuvchini ma'lumotlarni olishda xatolik","error":"rpc error: code = Unknown desc = sql: no rows in result set"}
-{"time":"2024-07-17T16:18:14.513444356+05:00","level":"ERROR","msg":"Xatolik sayohat hikoyalarini olshida","error":"pq: syntax error at or near \"deleted_at\""}
-{"time":"2024-07-17T16:24:59.744169532+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T16:24:59.761474148+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T17:19:23.822929376+05:00","level":"ERROR","msg":"Xatolik userning sayohat qilgan davlatlar sonini olishda","error":"pq: column reference \"id\" is ambiguous"}
-{"time":"2024-07-17T17:23:55.89361133+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T17:23:55.91045883+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T17:24:08.089012247+05:00","level":"ERROR","msg":"Xatolik userning mashhur sayohat rejarlarini olishda","error":"sql: no rows in result set"}
-{"time":"2024-07-17T18:37:09.93135556+05:00","level":"ERROR","msg":"Xatolik userning mashhur sayohat rejarlarini olishda","error":"sql: no rows in result set"}
-{"time":"2024-07-17T18:37:58.567729468+05:00","level":"ERROR","msg":"Xatolik userning mashhur sayohat rejarlarini olishda","error":"sql: no rows in result set"}
-{"time":"2024-07-17T18:48:06.35150274+05:00","level":"ERROR","msg":"Sahoyat rejasini tuzgan inson malumotini olishda xatolik","error":"rpc error: code = Unknown desc = sql: no rows in result set"}
-{"time":"2024-07-17T18:49:14.981529975+05:00","level":"ERROR","msg":"xabar jo'natuvchini ma'lumotlarni olishda xatolik","error":"rpc error: code = Unknown desc = sql: no rows in result set"}
-{"time":"2024-07-17T18:52:02.469784741+05:00","level":"ERROR","msg":"xabar jo'natuvchini ma'lumotlarni olishda xatolik","error":"rpc error: code = Unknown desc = sql: no rows in result set"}
-{"time":"2024-07-17T18:58:41.182092187+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T18:58:41.200026913+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T18:58:50.269729415+05:00","level":"ERROR","msg":"xabar jo'natuvchini ma'lumotlarni olishda xatolik","error":"rpc error: code = Unknown desc = sql: no rows in result set"}
-{"time":"2024-07-17T19:02:03.041979576+05:00","level":"ERROR","msg":"xabar jo'natuvchini ma'lumotlarni olishda xatolik","error":"rpc error: code = Unknown desc = sql: no rows in result set"}
-{"time":"2024-07-17T19:14:30.095380697+05:00","level":"ERROR","msg":"xabar jo'natuvchini ma'lumotlarni olishda xatolik","error":"rpc error: code = Unknown desc = sql: no rows in result set"}
-{"time":"2024-07-17T19:20:35.795179942+05:00","level":"ERROR","msg":"xabar jo'natuvchini ma'lumotlarni olishda xatolik","error":"rpc error: code = Unknown desc = sql: no rows in result set"}
-{"time":"2024-07-17T19:27:39.055925456+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T19:27:39.073675764+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T19:29:46.408208964+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T19:29:46.426061987+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T19:30:21.128120499+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T19:30:21.148374767+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T19:30:52.491525907+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T19:30:52.511057967+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T19:32:21.533560795+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T19:32:21.551337942+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T19:32:37.224897844+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T19:32:37.241542467+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T19:39:35.595959608+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T19:39:35.616877446+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-17T19:42:03.336082529+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-17T19:42:03.353983174+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-18T08:34:46.550009299+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-18T08:34:46.554093232+05:00","level":"ERROR","msg":"Error connection th postgres","error":"pq: password authentication failed for user \"postgres\""}
-{"time":"2024-07-18T08:35:38.639032327+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-18T08:35:38.643933571+05:00","level":"ERROR","msg":"Error connection th postgres","error":"pq: database \"content_service\" does not exist"}
-{"time":"2024-07-18T08:36:20.656405435+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-18T08:36:20.67134635+05:00","level":"ERROR","msg":"Error create to new listener","error":"listen tcp: address 50051: missing port in address"}
-{"time":"2024-07-18T08:36:50.815077025+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-18T08:36:50.819885171+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-18T08:37:47.681453085+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-18T08:37:47.687705041+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
-{"time":"2024-07-18T10:38:47.894933353+05:00","level":"INFO","msg":"Starting the server ..."}
-{"time":"2024-07-18T10:38:47.901885832+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
+{"time":"2024-07-18T15:11:47.273347457+05:00","level":"INFO","msg":"Starting the server ..."}
+{"time":"2024-07-18T15:11:47.278895628+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
+{"time":"2024-07-18T15:13:22.928843526+05:00","level":"INFO","msg":"Starting the server ..."}
+{"time":"2024-07-18T15:13:22.934836425+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
+{"time":"2024-07-18T15:30:33.204065413+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T15:31:26.768388+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T15:31:45.975414602+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T15:32:05.207174058+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T15:33:15.436203712+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T15:34:18.580567212+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T15:35:42.843419649+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T15:36:02.610402966+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T15:36:16.95592574+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T15:36:29.124439935+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T15:36:47.460693822+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T15:36:48.284068578+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T15:38:59.336049107+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T15:46:00.797367074+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T15:46:41.021278298+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T15:47:24.168703969+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T15:55:13.886579145+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T15:56:43.59862984+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T16:02:00.621363249+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T16:20:43.824505051+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T16:24:38.683105161+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T16:36:35.005066685+05:00","level":"INFO","msg":"Starting the server ..."}
+{"time":"2024-07-18T16:36:35.012194387+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
+{"time":"2024-07-18T16:37:06.700437864+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T16:39:26.371020271+05:00","level":"INFO","msg":"Starting the server ..."}
+{"time":"2024-07-18T16:39:26.37787213+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
+{"time":"2024-07-18T16:39:33.353979219+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T17:06:42.12564517+05:00","level":"INFO","msg":"Starting the server ..."}
+{"time":"2024-07-18T17:06:42.132226563+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
+{"time":"2024-07-18T17:07:33.287130754+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T17:08:22.283401336+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T17:12:55.13794357+05:00","level":"INFO","msg":"Starting the server ..."}
+{"time":"2024-07-18T17:12:55.142997359+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
+{"time":"2024-07-18T17:13:35.165942948+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T17:17:21.258014502+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T20:37:48.729397298+05:00","level":"INFO","msg":"Starting the server ..."}
+{"time":"2024-07-18T20:37:48.735002961+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
+{"time":"2024-07-18T20:40:43.369232607+05:00","level":"ERROR","msg":"maslahat bergan odamning malumotlarini olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T21:17:32.308569463+05:00","level":"ERROR","msg":"xabar jo'natuvchini ma'lumotlarni olishda xatolik","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-07-18T21:19:07.763139503+05:00","level":"ERROR","msg":"Xatolik hikoyalarning userlarini olishda","error":"failed to exit idle mode: invalid target address localhost::50050, error info: address localhost::50050:443: too many colons in address"}
+{"time":"2024-08-18T12:29:43.176124378+05:00","level":"INFO","msg":"Starting the server ..."}
+{"time":"2024-08-18T12:29:43.192379599+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
+{"time":"2024-08-18T15:26:04.240408299+05:00","level":"ERROR","msg":"Sayohat rejasini yangilashda xatolik","error":"pq: invalid input syntax for type uuid: \"string\""}
+{"time":"2024-08-18T17:13:36.847045759+05:00","level":"INFO","msg":"Starting the server ..."}
+{"time":"2024-08-18T17:13:36.853007123+05:00","level":"INFO","msg":"server is running ","PORT":":50051"}
+{"time":"2024-08-18T17:14:33.306783073+05:00","level":"ERROR","msg":"Sayohat manzili haqaida malumot olishda xatolik","error":"pq: invalid input syntax for type uuid: \"asdfasdf\""}

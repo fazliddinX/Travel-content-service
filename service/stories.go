@@ -6,6 +6,7 @@ import (
 	"content-service/models"
 	"content-service/storage/postgres"
 	"context"
+	"fmt"
 	"log/slog"
 )
 
@@ -17,6 +18,10 @@ type TravelStoriesService struct {
 }
 
 func (s *TravelStoriesService) CreateTravelStory(cxt context.Context, in *pb.CreateTravelStoryRequest) (*pb.CreateTravelStoryResponse, error) {
+	fmt.Println("keldi")
+	fmt.Println("keldi")
+	fmt.Println("keldi")
+	fmt.Println("keldi")
 	resp, err := s.StoriyRepo.CreateTravelStory(in)
 	if err != nil {
 		return nil, err

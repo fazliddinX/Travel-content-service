@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  migrate:
+    image: "migrate/migrate"
+    networks:
+      - travel
+    volumes:
+      - ./db/migrations:/migrations
+    command: [ "-path", "/migrations", "-database", "postgres://postgres:123321@postgres-travel-c:5432/travel_content?sslmode=disable", "up" ]
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+
+  postgres:
+    image: postgres:16.3
+    container_name: postgres-travel-c
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123321
+      - POSTGRES_DB=travel_content
+    networks:
+      - travel
+    ports:
+      - 5435:5432
+    volumes:
+      - postgres_data:/postgres/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d postgres" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  content:
+    container_name: "travel-content"
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - travel
+    ports:
+      - 50056:50051
+
+networks:
+  travel:
+    name: travel
+    driver: bridge
+
+volumes:
+  postgres_data:
+  migrations:

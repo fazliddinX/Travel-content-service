@@ -12,7 +12,6 @@ service CommunicationService {
     rpc GetUserStatics(GetUserStaticsRequest) returns (GetUserStaticsResponse);
 }
 
-// SEND MESSAGE
 message SendMessageRequest {
     string sende_id = 1;
     string recipient_id = 2;
@@ -27,7 +26,6 @@ message SendMessageResponse {
     string created_at = 5;
 }
 
-// LIST MESSAGE
 message ListMessageRequest {
     int32 page = 1;
     int32 limit = 2;
